@@ -22,12 +22,11 @@ def colorize(color, text):
         return text
 
 
-#
+#Arguments et options permettant de choisir la BDD à fuzzer, qu'elle soit locale ou distante
 
 def parse_cli_args():
     parser = argparse.ArgumentParser(
-        description='Fuzzer libinjection pour MariaDB, MSSQL, \
-            MySQL, PostgreSQL and Oracle DB')
+        description='Fuzzer utilisant libinjection pour tester les injections SQL sur MariaDB & MySQL')
     parser.add_argument(
         '-t',
         '--type',
@@ -37,8 +36,8 @@ def parse_cli_args():
         choices=[
             "mysql",
             "mariadb"])
-    
-    #
+
+#Options et arguments utilisés
     
     parser.add_argument('-q', '--query',
                         dest='query',
@@ -95,8 +94,7 @@ def db_connect(args):
         except mysql.connector.Error as err:
             print(colorize("red", "[ERREUR] {}".format(err)))
             return None
-
-
+        
     return connection
 
 def get_next(string, args):
