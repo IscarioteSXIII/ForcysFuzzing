@@ -22,7 +22,7 @@ def colorize(color, text):
         return text
 
 
-#Arguments et options permettant de choisir la BDD à fuzzer, qu'elle soit locale ou distante
+#
 
 def parse_cli_args():
     parser = argparse.ArgumentParser(
@@ -38,3 +38,65 @@ def parse_cli_args():
             "mysql",
             "mariadb"])
     
+    #
+    
+    parser.add_argument('-q', '--query',
+                        dest='query',
+                        help='Query to fuzz',
+                        required=True)
+    parser.add_argument('-p', '--payload',
+                        dest='payload',
+                        help='Payload to use',
+                        required=True)
+    parser.add_argument('-c', '--chars',
+                        dest='chars',
+                        help='Characters to fuzz',
+                        required=True)
+    parser.add_argument('--host',
+                        dest='host',
+                        help='Host to connect',
+                        required=True)
+    parser.add_argument('-u', '--user',
+                        dest='user',
+                        help='Database user')
+    parser.add_argument('--password',
+                        dest='password',
+                        help='Database user',
+                        default='')
+    parser.add_argument('-d', '--db',
+                        dest='db',
+                        help='Database name',
+                        required=True)
+    parser.add_argument('-o', '--out',
+                        dest='out',
+                        help='Filename pattern (default: log)',
+                        default="log")
+    parser.add_argument('--log-all',
+                        dest='log_all',
+                        action='store_true')
+    parser.add_argument('--check',
+                        dest='check',
+                        help='Check value',
+                        default=False)
+    return parser.parse_args()
+
+
+#Connecteurs permettant de se connecter aux différentes BDD (MariaDB)
+
+def db_connect(args):
+    if args.type == "mysql" or args.type == "mariadb":
+        import mysql.connector
+        try:
+            connection = mysql.connector.connect(
+                user=args.user,
+                password=args.password,
+                database=args.db,
+                host=args.host)
+        except mysql.connector.Error as err:
+            print(colorize("red", "[ERROR] {}".format(err)))
+            return None
+
+
+    return connection
+
+
