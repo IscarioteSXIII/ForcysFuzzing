@@ -34,3 +34,7 @@ def parse_cli_args():
         dest='type',
         default='mysql',
         help=('Database type: mysql'),
+        choices=[
+            "mysql",
+            "mariadb"])
+    
