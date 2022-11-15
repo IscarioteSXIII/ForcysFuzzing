@@ -1,4 +1,4 @@
-#Main GUI - Regroupement des différents bout de code.
+# Main GUI - Regroupement des différents bout de code.
 
 Features intégrées:
 - Interface Graphique (Enzo P)
