@@ -455,14 +455,6 @@ menufuzz.add_separator()
 menufuzz.add_command(label="DDOS", command=NewDDOSWindows)
 
 
-info = Toplevel(root)
-info.title("Informations")
-infoWidth = 550
-infoHeight = 600
-info.geometry("%dx%d+%d+%d" % (infoWidth, infoHeight, x, y))
-info.resizable(0, 0)
-info.attributes("-topmost", True)
-
 #Affichage GUI
 root.mainloop()
 os.kill(os.getpid(), 9)
