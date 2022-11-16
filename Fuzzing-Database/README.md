@@ -1,7 +1,7 @@
 English
 
 This script has been created to test database and to find if they're vulnerable to SQL Injection.
-Actually, only MariaDB and MySQL are supported implementatioon of other technologies will be possible with further work (OracleDB, MSSQL, PostgreSQL...)
+Actually, only MariaDB and MySQL are supported. Implementatioon of other technologies will be possible with further work (OracleDB, MSSQL, PostgreSQL...)
 
 
 ## Help
