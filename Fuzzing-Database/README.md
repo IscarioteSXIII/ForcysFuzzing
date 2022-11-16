@@ -23,7 +23,6 @@ optional arguments:
   -d DB, --db                  Database name
   -o OUT, --out                Filename
   --log-all                    Log everything
-  --check                      Check value
 ```
 
 ## Usage example
