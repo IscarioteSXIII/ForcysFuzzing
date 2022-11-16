@@ -15,3 +15,7 @@ Dépendances :
 ```
 python -m pip install [librairie]
 ```
+
+Les codes sources Fuzzing Web et Fuzzing SQL n'ont pas été implémentés au code Main.py.
+
+La mise en place graphique ayant été faite sur Windows, certaines librairies n'ont pas été installées empêchant le code de fonctionner. Les codes sources sont néanmoins disponible dans le repo GitHub.
