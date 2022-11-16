@@ -14,7 +14,6 @@ pip3 install pycurl wfuzz
 
 ## Fuzzing a URL
 
-Fuzzing a URL with wfuzz library is very simple. Firstly, import the wfuzz module:
 
 Now, let’s try to fuzz a web page to look for hidden content, such as directories. For this example, let’s use Acunetix’s testphp (http://testphp.vulnweb.com/):
 ![fuzzing url](https://user-images.githubusercontent.com/118366867/202223778-45a0b57a-2b4d-4475-be68-c4497f3992e3.png)
