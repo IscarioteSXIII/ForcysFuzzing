@@ -33,50 +33,30 @@ def parse_cli_args():
         dest='type',
         default='mysql',
         help=('Database type: mysql'),
-        choices=[
-            "mysql",
-            "mariadb"])
+        choices=["mysql","mariadb"])
 
 #Options et arguments utilisés
     
-    parser.add_argument('-q', '--query',
-                        dest='query',
-                        help='Query to fuzz',
-                        required=True)
-    parser.add_argument('-p', '--payload',
-                        dest='payload',
-                        help='Payload to use',
-                        required=True)
-    parser.add_argument('-c', '--chars',
-                        dest='chars',
-                        help='Characters to fuzz',
-                        required=True)
-    parser.add_argument('--host',
-                        dest='host',
-                        help='Host to connect',
-                        required=True)
-    parser.add_argument('-u', '--user',
-                        dest='user',
-                        help='Database user')
-    parser.add_argument('--password',
-                        dest='password',
-                        help='Database user',
-                        default='')
-    parser.add_argument('-d', '--db',
-                        dest='db',
-                        help='Database name',
-                        required=True)
-    parser.add_argument('-o', '--out',
-                        dest='out',
-                        help='Filename pattern (default: log)',
-                        default="log")
-    parser.add_argument('--log-all',
-                        dest='log_all',
-                        action='store_true')
-    parser.add_argument('--check',
-                        dest='check',
-                        help='Check value',
-                        default=False)
+    parser.add_argument('-q', '--query',dest='query',help='Query to fuzz',required=True)
+    
+    parser.add_argument('-p', '--payload',dest='payload',help='Payload to use',required=True)
+    
+    parser.add_argument('-c', '--chars',dest='chars',help='Characters to fuzz',required=True)
+    
+    parser.add_argument('--host',dest='host',help='Host to connect',required=True)
+    
+    parser.add_argument('-u', '--user',dest='user',help='Database user')
+    
+    parser.add_argument('--password',dest='password',help='Database user',default='')
+    
+    parser.add_argument('-d', '--db',dest='db',help='Database name',required=True)
+    
+    parser.add_argument('-o', '--out',dest='out',help='Filename pattern (default: log)',default="log")
+    
+    parser.add_argument('--log-all',dest='log_all',action='store_true')
+    
+    parser.add_argument('--check',dest='check',help='Check value',default=False)
+    
     return parser.parse_args()
 
 
