@@ -17,7 +17,6 @@ pip3 install pycurl wfuzz
 
 Now, let’s try to fuzz a web page to look for hidden content, such as directories. For this example, let’s use Acunetix’s testphp (http://testphp.vulnweb.com/):
 ![fuzzing url](https://user-images.githubusercontent.com/118366867/202223778-45a0b57a-2b4d-4475-be68-c4497f3992e3.png)
-Now, we have a FuzzResult object called r. We can get all the information we need from this object.
 
 ## Get payload
 
@@ -26,7 +25,6 @@ The get_payload function generates a Wfuzz payload from a Python iterable. It is
 Generating a new payload and start fuzzing is really simple:
 ![get](https://user-images.githubusercontent.com/118366867/202224094-20457027-c38b-4000-a052-dd2ad4a95952.png)
 
-The get_payloads method can be used when various payloads are needed:
 
 ## Get session
 
