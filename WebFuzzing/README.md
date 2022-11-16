@@ -33,6 +33,6 @@ The get_session function generates a Wfuzz session object from the specified com
 
 ## Interacting with the results
 
-Once a Wfuzz result is available the grammar defined in the filter language can be used to work with the results’ values. For example:
+It allows you to retrieve user cookie data...
 ![resulta](https://user-images.githubusercontent.com/118366867/202224401-dd199799-0870-4e11-ac83-3c3a82cf8bef.png)
 
