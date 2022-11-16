@@ -10,6 +10,6 @@ Dépendances :
 - Librairie "requests"
 - Librairie "bs4"
 
-'''
+```
 python -m pip install [librairie]
-'''
+```
