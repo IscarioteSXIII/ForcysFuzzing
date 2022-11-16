@@ -9,5 +9,6 @@ Dépendances :
 - NMAP 7.92 - /!\ La version 7.93 n'est pas compatible
 - Librairie "requests"
 - Librairie "bs4"
-
-==> python -m pip install [librairie]
+'''
+python -m pip install [librairie]
+'''
