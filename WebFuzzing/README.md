@@ -1,6 +1,10 @@
+# Prerequisites
+
 apt --purge remove python3-pycurl
 apt install libcurl4-openssl-dev libssl-dev
 pip3 install pycurl wfuzz
+
+## select parameters
 
 1st step we choose the URL 
 
@@ -8,14 +12,15 @@ pip3 install pycurl wfuzz
 ![image](https://user-images.githubusercontent.com/118366867/202224052-6d312d61-25f2-4b2c-ab2a-9710da1dea54.png)
 
 
-Fuzzing a URL
+## Fuzzing a URL
+
 Fuzzing a URL with wfuzz library is very simple. Firstly, import the wfuzz module:
 
 Now, let’s try to fuzz a web page to look for hidden content, such as directories. For this example, let’s use Acunetix’s testphp (http://testphp.vulnweb.com/):
 ![fuzzing url](https://user-images.githubusercontent.com/118366867/202223778-45a0b57a-2b4d-4475-be68-c4497f3992e3.png)
 Now, we have a FuzzResult object called r. We can get all the information we need from this object.
 
-Get payload
+## Get payload
 
 The get_payload function generates a Wfuzz payload from a Python iterable. It is a quick and flexible way of getting a payload programmatically without using Wfuzz payloads plugins.
 
@@ -24,11 +29,13 @@ Generating a new payload and start fuzzing is really simple:
 
 The get_payloads method can be used when various payloads are needed:
 
-Get session
+## Get session
+
 The get_session function generates a Wfuzz session object from the specified command line. It is a quick way of getting a payload programmatically from a string representing CLI options:
 ![payload](https://user-images.githubusercontent.com/118366867/202224162-2898d51a-da39-45bd-8508-4e074d0f11ad.png)
 
-Interacting with the results
+## Interacting with the results
+
 Once a Wfuzz result is available the grammar defined in the filter language can be used to work with the results’ values. For example:
 ![resulta](https://user-images.githubusercontent.com/118366867/202224401-dd199799-0870-4e11-ac83-3c3a82cf8bef.png)
 
