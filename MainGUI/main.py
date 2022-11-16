@@ -1,10 +1,11 @@
 """
-Contexte :      Projet Python Aforp - Fuzzing
+Context :       Projet Python Aforp - Fuzzing
 
 Description :   Interface graphique regroupant :
                     - Network Scanner based on NMAP
                     - Crawler HTTP(S)
                     - Différent fuzzing (SQL, WEB, ...)
+                    - DDOS (pas trop mechant)
 
 Auteurs :       Enzo PALASSIN :
                     - Integration GUI / Scanner / Crawler
@@ -24,8 +25,9 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from datetime import datetime
-import threading, requests, os, sys, socket, random
-import scapy.all as scapy
+import threading, requests, os, socket, random
+
+#import scapy.all as scapy
 
 
 #Main GUI
@@ -33,14 +35,28 @@ root = Tk()
 root.title("Network scanner - GUI")
 
 #Variables
+''' NMAP '''
 selected_profil = StringVar()
 CommandEntry = StringVar()
 Cible = StringVar()
 NMAP_Command = StringVar()
 
+''' DDOS '''
 KeepGoing = 1
 DDOStarget = StringVar()
 
+''' Fuzzing SQL '''
+pmdb = IntVar()
+pmsql = IntVar()
+selectedIP = StringVar()
+selectedLogin = StringVar()
+selectedPsswd = StringVar()
+selectedPayload = StringVar()
+selectedQuery = StringVar()
+selectedChfuzz = StringVar()
+selectedDB = StringVar()
+
+'''' Crawler HTTP(s) '''
 URLEntry = StringVar()
 pall = IntVar()
 p404 = IntVar()
@@ -346,6 +362,48 @@ def DDOS(foo):
     print("exiting DDOS")
 
 
+def NewFuzzSQLWindow():
+    '''
+    Implementation graphique seulement !
+    Une librairie ne veut pas s'installer, le code source n'est donc pas implemente.
+    Voir Github : https://github.com/IscarioteSXIII/ForcysFuzzing/tree/main/Fuzzing-Database
+    '''
+    FuzzSQLWindow = Toplevel(root)
+    FuzzSQLWindow.title("Fuzzing SQL")
+    FuzzSQLWindowWidth = 550
+    FuzzSQLWindowHeight = 600
+    FuzzSQLWindow.geometry("%dx%d+%d+%d" % (FuzzSQLWindowWidth, FuzzSQLWindowHeight, x, y))
+    FuzzSQLWindow.resizable(0, 0)
+
+    lbl_tech = Label(FuzzSQLWindow, text="Techno: ", font=("calibri", 12)).place(x=365, y=45)
+    lbl_IPcible = Label(FuzzSQLWindow, text="Cible: ", font=("calibri", 12)).place(x=10, y=10)
+    lbl_usr = Label(FuzzSQLWindow, text="Username: ", font=("calibri", 12)).place(x=10, y=35)
+    lbl_passwd = Label(FuzzSQLWindow, text="Password: ", font=("calibri", 12)).place(x=10, y=60)
+    lbl_db = Label(FuzzSQLWindow, text="Databse: ", font=("calibri", 12)).place(x=10, y=85)
+    separator = ttk.Separator(FuzzSQLWindow, orient="horizontal").place(relx=0.0, rely=0.20, relheight=0.4, relwidth=1)
+    lbl_query = Label(FuzzSQLWindow, text="Query: ", font=("calibri", 12)).place(x=10, y=150)
+    lbl_payload = Label(FuzzSQLWindow, text="Payload: ", font=("calibri", 12)).place(x=10, y=185)
+    lbl_chfuzz = Label(FuzzSQLWindow, text="Caractères\n à Fuzzer: ", font=("calibri", 12)).place(x=10, y=220)
+
+    chkb_Mariadb = Checkbutton(FuzzSQLWindow, text="MariaDB", font=("calibri", 11) ,variable=pmdb, onvalue=1, offvalue=0).place(x=435, y=30)
+    chkb_mysql = Checkbutton(FuzzSQLWindow, text="MySQL", font=("calibri", 11) ,variable=pmsql, onvalue=1, offvalue=0).place(x=435, y=60)
+
+    entry_IPcible = Entry(FuzzSQLWindow, font=("calibri", 11), width=35, textvariable=selectedIP).place(x=100, y=12)
+    entry_usr = Entry(FuzzSQLWindow, font=("calibri", 11), width=35, textvariable=selectedLogin).place(x=100, y=37)
+    entry_passwd = Entry(FuzzSQLWindow, font=("calibri", 11), width=35, textvariable=selectedPsswd).place(x=100, y=62)
+    entry_db = Entry(FuzzSQLWindow, font=("calibri", 11), width=35, textvariable=selectedDB).place(x=100, y=87)
+    entry_query = Entry(FuzzSQLWindow, font=("calibri", 11), width=50, textvariable=selectedQuery).place(x=100, y=152)
+    entry_payload = Entry(FuzzSQLWindow, font=("calibri", 11), width=50, textvariable=selectedPayload).place(x=100, y=187)
+    entry_chfuzz = Entry(FuzzSQLWindow, font=("calibri", 11), width=50, textvariable=selectedChfuzz).place(x=100, y=233)
+
+    start_button = Button(FuzzSQLWindow, text = "Start", font=("calibri", 10), padx=12, command=(LaunchDDOS)).place(x=100,y=270)
+    stop_button = Button(FuzzSQLWindow, text = "Stop", font=("calibri", 10), padx=12, command=(LaunchDDOS)).place(x=170,y=270)
+
+    FuzzSQLOutput = Text(FuzzSQLWindow, width=65, height=17)
+    FuzzSQLOutput["state"] = "disabled"
+    FuzzSQLOutput.place(x=11, y=310)
+
+
 #Taille de la fenêtre Root
 width = 850
 height = 600
@@ -391,11 +449,19 @@ menucrawl.add_command(label="Crawler HTTP(s)", command=NewCrawlWindow)
 
 menufuzz = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Attack", menu=menufuzz)
-menufuzz.add_command(label="Fuzzing SQL")
+menufuzz.add_command(label="Fuzzing SQL", command=NewFuzzSQLWindow)
 menufuzz.add_command(label="Fuzzing WEB")
 menufuzz.add_separator()
 menufuzz.add_command(label="DDOS", command=NewDDOSWindows)
 
+
+info = Toplevel(root)
+info.title("Informations")
+infoWidth = 550
+infoHeight = 600
+info.geometry("%dx%d+%d+%d" % (infoWidth, infoHeight, x, y))
+info.resizable(0, 0)
+info.attributes("-topmost", True)
 
 #Affichage GUI
 root.mainloop()
