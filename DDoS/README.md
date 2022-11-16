@@ -34,15 +34,9 @@ Test it on your own target or if you have been granted authorization to test it.
 ```
 # python3 ddosef.py 
 
-usage: ddosef.py 
-
-optional arguments:
-  -h, --help            show help
+IP Cible: IP A ATTAQUER
+PORT: PORT D'ATTAQUE
 
 ```
 
-## Usage example
-```
-python3 ddosef.py
-```
 
