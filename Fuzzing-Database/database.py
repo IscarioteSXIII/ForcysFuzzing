@@ -115,6 +115,8 @@ def log_msg(filename, msg):
         f.write("{}\n".format(msg))
     lock.release()
 
+    
+    
 def process_one(opts):
     cursor = opts[0]
     payload = opts[1]
@@ -143,10 +145,10 @@ def process_one(opts):
                         args.type.upper(), msg))
         else:
             if sqli["fingerprint"] in fingerprints:
-                print (colorize("blue", "[OK][DUP] {}".format(msg)))
+                print (colorize("blue", "[OK][NON] {}".format(msg)))
                 log_msg(
                     "{}_bad.txt".format(
-                        args.type), "[DUPE][{}] {}".format(
+                        args.type), "[NON][{}] {}".format(
                         args.type.upper(), msg))
             else:
                 print (colorize("green", "[OK][Nouveau] {}".format(msg)))
