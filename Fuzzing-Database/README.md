@@ -12,22 +12,18 @@ usage: database.py [-h] --host [hostame/IP] [-t {mysql,mariadb}] -q QUERY -p
                  [-o OUT] [--log-all] [--check CHECK] [--threads THREADS]
 
 optional arguments:
-  -h, --help            show help
-  --host HOST           Hostname or IP to test
-  -t {mysql,mariadb}, --type {mysql,mariadb}
-                        Database type: mysql, mariadb
-  -q QUERY, --query QUERY
-                        Query to fuzz
-  -p PAYLOAD, --payload PAYLOAD
-                        Payload to use
-  -c CHARS, --chars CHARS
-                        Characters to fuzz
-  -u USER, --user USER  Database user
-  --password PASSWORD   Database password
-  -d DB, --db DB        Database name
-  -o OUT, --out OUT     Filename pattern (default: log)
-  --log-all
-  --check CHECK         Check value
+  -h, --help                   help
+  --host HOST                  Hostname or IP to test
+  -t TYPE, --type              Database type: mysql, mariadb
+  -q QUERY, --query            Query to fuzz
+  -p PAYLOAD, --payload        Payload to use
+  -c CHARS, --chars            Characters to fuzz
+  -u USER, --user              Database user
+  --password                   Database password
+  -d DB, --db                  Database name
+  -o OUT, --out                Filename
+  --log-all                    Log everything
+  --check                      Check value
 ```
 
 ## Usage example
