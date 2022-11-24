@@ -166,6 +166,9 @@ def main(args):
             payload = args.payload.format(item)
             try:
                 process_one([cursor, payload, args])
+                
+# Si erreur, rollback                
+                
             except BaseException as err:
                 if args.type == "pgsql":
                     cnx.rollback()
