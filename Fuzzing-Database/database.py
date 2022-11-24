@@ -139,13 +139,17 @@ def process_one(opts):
                 log_msg("{}_fp.txt".format(args.type), sqli["fingerprint"])
                 fingerprints.append(sqli["fingerprint"])
 
-
+#Connexion à la DB et cursor permettant l'injection des payloads
+                
 def main(args):
     cnx = db_connect(args)
     if not cnx:
         sys.exit()
     cursor = cnx.cursor()
     sequence = list()
+    
+#Tout logger (verbose)    
+    
     if args.log_all:
         file_log = open("{}_all.txt".format(args.type), "w")
     if args.check:
