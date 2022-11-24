@@ -1,6 +1,6 @@
-# ForcysFuzzing
+# Hot-Fuzz
+
+Heuristic Overloaded Toolbox for Fuzzing
+
 Projet Forcys Fuzzing
 
-
-Enzo here ! 
-#Yo les tapettes ! (signe Cat's Eyes)
